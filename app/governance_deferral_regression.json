@@ -1,0 +1,206 @@
+{
+  "scope": "Owner-supplied Governance deferral; offline counterexample only. No provider attestation or new inference.",
+  "reason": "Defer due to compound conflicts among deploy-large, budget-70, and deploy-small, which form an unsolvable cycle; preserving existing approvals and authority cannot be satisfied with any ordering that respects all conflict constraints, so the batch must be deferred.",
+  "state": {
+    "approvals": {
+      "AP-cost-B": {
+        "actor": "B",
+        "budget_version": null,
+        "expires_at": 100,
+        "plan_digest": "b4e184247a89992b48683b566697ef17afc829de6f8dee464d5b1a0106bd9e51",
+        "policy": "policy-v1",
+        "provenance": "SIMULATED MANAGER APPROVAL FIXTURE",
+        "revoked": false,
+        "run_id": "cost-B",
+        "service": "inference-service-1"
+      },
+      "AP-deploy-A": {
+        "actor": "A",
+        "budget_version": 1,
+        "expires_at": 100,
+        "plan_digest": "5be35b33fceb878b15b5c45c5dddb915dbb8627040a87c21f25230b614fd622e",
+        "policy": "policy-v1",
+        "provenance": "SIMULATED MANAGER APPROVAL FIXTURE",
+        "revoked": false,
+        "run_id": "deploy-A",
+        "service": "inference-service-1"
+      },
+      "AP-recovery-A": {
+        "actor": "RECOVERY",
+        "budget_version": null,
+        "expires_at": 200,
+        "plan_digest": "5be35b33fceb878b15b5c45c5dddb915dbb8627040a87c21f25230b614fd622e",
+        "policy": "policy-v1",
+        "provenance": "SIMULATED PREAUTHORIZED BOUNDED RECOVERY",
+        "revoked": false,
+        "run_id": "deploy-A",
+        "service": "inference-service-1"
+      },
+      "AP-route-C": {
+        "actor": "C",
+        "budget_version": null,
+        "expires_at": 100,
+        "plan_digest": "dd0136e2014597d263728cb7c1249855e1bda00550b298dbed1cd4968f92c9f7",
+        "policy": "policy-v1",
+        "provenance": "SIMULATED MANAGER APPROVAL FIXTURE",
+        "revoked": false,
+        "run_id": "route-C",
+        "service": "inference-service-1"
+      }
+    },
+    "budget_version": 1,
+    "capabilities": {
+      "A": [
+        "reserve_capacity",
+        "scale_candidate",
+        "set_route",
+        "start_candidate"
+      ],
+      "B": [
+        "set_capacity_limit"
+      ],
+      "C": [
+        "add_dependency",
+        "set_route"
+      ],
+      "RECOVERY": [
+        "release_capacity",
+        "release_reservation",
+        "restore_route",
+        "stop_candidate"
+      ]
+    },
+    "capacity_limit": 100,
+    "clock": 0,
+    "deployments": {
+      "candidate-v2": {
+        "allocated_units": 20,
+        "config": "model-config-v2",
+        "dependencies": [],
+        "healthy": true,
+        "in_flight": 0,
+        "metrics": {
+          "correctness": 100,
+          "error_rate": 0,
+          "observed_at": 0,
+          "observed_unix": 1793299217.025759,
+          "p95_ms": 1.701,
+          "samples": 100,
+          "source": "100 REAL LOOPBACK HTTP ARITHMETIC REQUESTS; NOT MODEL QUALITY OR GPU PERFORMANCE"
+        },
+        "owner_run": "deploy-A",
+        "status": "RUNNING",
+        "stop_timeout": false
+      }
+    },
+    "paused_runs": [],
+    "plans": {
+      "cost-B": {
+        "actor": "B",
+        "approved_limit": 70,
+        "service": "inference-service-1"
+      },
+      "deploy-A": {
+        "actor": "A",
+        "candidate": "candidate-v2",
+        "config": "model-config-v2",
+        "max_traffic": 50,
+        "max_units": 40,
+        "service": "inference-service-1"
+      },
+      "route-C": {
+        "actor": "C",
+        "can_depend": true,
+        "candidate": "candidate-v2",
+        "max_traffic": 20,
+        "service": "inference-service-1"
+      }
+    },
+    "policy": "policy-v1",
+    "reservations": {
+      "coord-bootstrap": {
+        "owner_run": "deploy-A",
+        "status": "CONSUMED",
+        "units": 20
+      }
+    },
+    "route_owner": null,
+    "route_version": 1,
+    "routing": {
+      "candidate-v2": 0,
+      "stable-v1": 100
+    },
+    "service": "inference-service-1",
+    "stable_allowed": true,
+    "stable_capacity_sufficient": true,
+    "stable_healthy": true,
+    "stable_units": 40
+  },
+  "requests": [
+    {
+      "actor": "A",
+      "after": [],
+      "expires_unix": 1793302802.1093395,
+      "id": "deploy-large",
+      "parameters": {
+        "units": 15
+      },
+      "priority": 3,
+      "run_id": "deploy-A",
+      "submitted_unix": 1793299217.1093392,
+      "tool": "reserve_capacity"
+    },
+    {
+      "actor": "B",
+      "after": [],
+      "expires_unix": 1793302802.1234245,
+      "id": "budget-70",
+      "parameters": {
+        "limit": 70
+      },
+      "priority": 5,
+      "run_id": "cost-B",
+      "submitted_unix": 1793299217.1234243,
+      "tool": "set_capacity_limit"
+    },
+    {
+      "actor": "C",
+      "after": [],
+      "expires_unix": 1793302802.1385536,
+      "id": "customer-route",
+      "parameters": {
+        "candidate_percent": 10
+      },
+      "priority": 4,
+      "run_id": "route-C",
+      "submitted_unix": 1793299217.1385536,
+      "tool": "set_route"
+    },
+    {
+      "actor": "C",
+      "after": [],
+      "expires_unix": 1793302802.1522632,
+      "id": "customer-job",
+      "parameters": {
+        "dependency_id": "C-mission-job"
+      },
+      "priority": 4,
+      "run_id": "route-C",
+      "submitted_unix": 1793299217.152263,
+      "tool": "add_dependency"
+    },
+    {
+      "actor": "A",
+      "after": [],
+      "expires_unix": 1793302802.1662395,
+      "id": "deploy-small",
+      "parameters": {
+        "units": 5
+      },
+      "priority": 2,
+      "run_id": "deploy-A",
+      "submitted_unix": 1793299217.1662395,
+      "tool": "reserve_capacity"
+    }
+  ]
+}

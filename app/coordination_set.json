@@ -1,0 +1,55 @@
+{
+  "schema_version": "agent-rehearsal-coordination-benchmark-set-v1",
+  "set_id": "coordination-20261022-v1",
+  "scope": "Twelve transparent policy-only fixtures for the bounded ordering problem. No real workers, model quality claim, hidden holdout or cloud cost claim. Live mode measures one ordering proposal per case against an exhaustive bounded reference. Expected scores remain outside provider contexts.",
+  "cases": [
+    {
+      "id": "coord-01-balanced",
+      "profile": "balanced"
+    },
+    {
+      "id": "coord-02-cost-first",
+      "profile": "cost-first"
+    },
+    {
+      "id": "coord-03-deployment-first",
+      "profile": "deployment-first"
+    },
+    {
+      "id": "coord-04-competing-routes",
+      "profile": "competing-routes"
+    },
+    {
+      "id": "coord-05-existing-C-owner",
+      "profile": "existing-C-owner"
+    },
+    {
+      "id": "coord-06-approval-revoked",
+      "profile": "approval-revoked"
+    },
+    {
+      "id": "coord-07-A-paused",
+      "profile": "A-paused"
+    },
+    {
+      "id": "coord-08-stale-measurements",
+      "profile": "stale-measurements"
+    },
+    {
+      "id": "coord-09-unsafe-fallback",
+      "profile": "unsafe-fallback"
+    },
+    {
+      "id": "coord-10-zero-headroom",
+      "profile": "zero-headroom"
+    },
+    {
+      "id": "coord-11-aged-small-request",
+      "profile": "aged-small-request"
+    },
+    {
+      "id": "coord-12-untrusted-identifier",
+      "profile": "untrusted-identifier"
+    }
+  ]
+}

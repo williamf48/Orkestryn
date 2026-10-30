@@ -1,0 +1,471 @@
+{
+  "schema_version": "agent-rehearsal-fixed-agent-evaluation-v1",
+  "set_id": "local-agent-regression-20261020-v1",
+  "scope": "Public fixed regression cases within known single-service templates; not an unseen-family holdout or a model accuracy result. Expected labels are for the scorer and never passed to the model.",
+  "cases": [
+    {
+      "id": "routing-metrics_at_limit",
+      "challenge": {
+        "schema_version": "agent-rehearsal-challenge-proposal-v1",
+        "parameters": {
+          "stable_units": 27,
+          "candidate_units": 7,
+          "extra_units": 6,
+          "initial_limit": 46,
+          "new_limit": 37
+        },
+        "scenario": "routing",
+        "fault": "metrics_at_limit",
+        "fault_after": 5,
+        "order": [
+          "A_READ",
+          "B_READ",
+          "B_LIMIT",
+          "C_READ",
+          "C_WRITE",
+          "A_RESERVE",
+          "A_ROUTE"
+        ],
+        "reason": "Fixed evaluation v1: routing with metrics_at_limit. Public regression fixture; expected outcomes are kept outside model contexts."
+      },
+      "expected": {
+        "task": "repair",
+        "base_units": 34,
+        "limit": 37,
+        "max_repair_units": 3,
+        "protected_kind": "routing"
+      }
+    },
+    {
+      "id": "dependency-metrics_at_limit",
+      "challenge": {
+        "schema_version": "agent-rehearsal-challenge-proposal-v1",
+        "parameters": {
+          "stable_units": 28,
+          "candidate_units": 8,
+          "extra_units": 6,
+          "initial_limit": 48,
+          "new_limit": 39
+        },
+        "scenario": "dependency",
+        "fault": "metrics_at_limit",
+        "fault_after": 5,
+        "order": [
+          "A_READ",
+          "B_READ",
+          "B_LIMIT",
+          "C_READ",
+          "C_WRITE",
+          "A_RESERVE",
+          "A_ROUTE"
+        ],
+        "reason": "Fixed evaluation v1: dependency with metrics_at_limit. Public regression fixture; expected outcomes are kept outside model contexts."
+      },
+      "expected": {
+        "task": "repair",
+        "base_units": 36,
+        "limit": 39,
+        "max_repair_units": 3,
+        "protected_kind": "dependency"
+      }
+    },
+    {
+      "id": "routing-stop_timeout",
+      "challenge": {
+        "schema_version": "agent-rehearsal-challenge-proposal-v1",
+        "parameters": {
+          "stable_units": 30,
+          "candidate_units": 7,
+          "extra_units": 6,
+          "initial_limit": 49,
+          "new_limit": 40
+        },
+        "scenario": "routing",
+        "fault": "stop_timeout",
+        "fault_after": 5,
+        "order": [
+          "A_READ",
+          "B_READ",
+          "B_LIMIT",
+          "C_READ",
+          "C_WRITE",
+          "A_RESERVE",
+          "A_ROUTE"
+        ],
+        "reason": "Fixed evaluation v1: routing with stop_timeout. Public regression fixture; expected outcomes are kept outside model contexts."
+      },
+      "expected": {
+        "task": "repair",
+        "base_units": 37,
+        "limit": 40,
+        "max_repair_units": 3,
+        "protected_kind": "routing"
+      }
+    },
+    {
+      "id": "dependency-stop_timeout",
+      "challenge": {
+        "schema_version": "agent-rehearsal-challenge-proposal-v1",
+        "parameters": {
+          "stable_units": 31,
+          "candidate_units": 8,
+          "extra_units": 6,
+          "initial_limit": 51,
+          "new_limit": 42
+        },
+        "scenario": "dependency",
+        "fault": "stop_timeout",
+        "fault_after": 5,
+        "order": [
+          "A_READ",
+          "B_READ",
+          "B_LIMIT",
+          "C_READ",
+          "C_WRITE",
+          "A_RESERVE",
+          "A_ROUTE"
+        ],
+        "reason": "Fixed evaluation v1: dependency with stop_timeout. Public regression fixture; expected outcomes are kept outside model contexts."
+      },
+      "expected": {
+        "task": "repair",
+        "base_units": 39,
+        "limit": 42,
+        "max_repair_units": 3,
+        "protected_kind": "dependency"
+      }
+    },
+    {
+      "id": "routing-workflow_failure",
+      "challenge": {
+        "schema_version": "agent-rehearsal-challenge-proposal-v1",
+        "parameters": {
+          "stable_units": 33,
+          "candidate_units": 7,
+          "extra_units": 6,
+          "initial_limit": 52,
+          "new_limit": 43
+        },
+        "scenario": "routing",
+        "fault": "workflow_failure",
+        "fault_after": 5,
+        "order": [
+          "A_READ",
+          "B_READ",
+          "B_LIMIT",
+          "C_READ",
+          "C_WRITE",
+          "A_RESERVE",
+          "A_ROUTE"
+        ],
+        "reason": "Fixed evaluation v1: routing with workflow_failure. Public regression fixture; expected outcomes are kept outside model contexts."
+      },
+      "expected": {
+        "task": "defer",
+        "base_units": 40,
+        "limit": 43,
+        "max_repair_units": 3,
+        "protected_kind": "routing"
+      }
+    },
+    {
+      "id": "dependency-workflow_failure",
+      "challenge": {
+        "schema_version": "agent-rehearsal-challenge-proposal-v1",
+        "parameters": {
+          "stable_units": 34,
+          "candidate_units": 8,
+          "extra_units": 6,
+          "initial_limit": 54,
+          "new_limit": 45
+        },
+        "scenario": "dependency",
+        "fault": "workflow_failure",
+        "fault_after": 5,
+        "order": [
+          "A_READ",
+          "B_READ",
+          "B_LIMIT",
+          "C_READ",
+          "C_WRITE",
+          "A_RESERVE",
+          "A_ROUTE"
+        ],
+        "reason": "Fixed evaluation v1: dependency with workflow_failure. Public regression fixture; expected outcomes are kept outside model contexts."
+      },
+      "expected": {
+        "task": "defer",
+        "base_units": 42,
+        "limit": 45,
+        "max_repair_units": 3,
+        "protected_kind": "dependency"
+      }
+    },
+    {
+      "id": "routing-metrics_expired",
+      "challenge": {
+        "schema_version": "agent-rehearsal-challenge-proposal-v1",
+        "parameters": {
+          "stable_units": 36,
+          "candidate_units": 7,
+          "extra_units": 6,
+          "initial_limit": 55,
+          "new_limit": 46
+        },
+        "scenario": "routing",
+        "fault": "metrics_expired",
+        "fault_after": 5,
+        "order": [
+          "A_READ",
+          "B_READ",
+          "B_LIMIT",
+          "C_READ",
+          "C_WRITE",
+          "A_RESERVE",
+          "A_ROUTE"
+        ],
+        "reason": "Fixed evaluation v1: routing with metrics_expired. Public regression fixture; expected outcomes are kept outside model contexts."
+      },
+      "expected": {
+        "task": "defer",
+        "base_units": 43,
+        "limit": 46,
+        "max_repair_units": 3,
+        "protected_kind": "routing"
+      }
+    },
+    {
+      "id": "dependency-metrics_expired",
+      "challenge": {
+        "schema_version": "agent-rehearsal-challenge-proposal-v1",
+        "parameters": {
+          "stable_units": 37,
+          "candidate_units": 8,
+          "extra_units": 6,
+          "initial_limit": 57,
+          "new_limit": 48
+        },
+        "scenario": "dependency",
+        "fault": "metrics_expired",
+        "fault_after": 5,
+        "order": [
+          "A_READ",
+          "B_READ",
+          "B_LIMIT",
+          "C_READ",
+          "C_WRITE",
+          "A_RESERVE",
+          "A_ROUTE"
+        ],
+        "reason": "Fixed evaluation v1: dependency with metrics_expired. Public regression fixture; expected outcomes are kept outside model contexts."
+      },
+      "expected": {
+        "task": "defer",
+        "base_units": 45,
+        "limit": 48,
+        "max_repair_units": 3,
+        "protected_kind": "dependency"
+      }
+    },
+    {
+      "id": "routing-candidate_failure",
+      "challenge": {
+        "schema_version": "agent-rehearsal-challenge-proposal-v1",
+        "parameters": {
+          "stable_units": 39,
+          "candidate_units": 7,
+          "extra_units": 6,
+          "initial_limit": 58,
+          "new_limit": 49
+        },
+        "scenario": "routing",
+        "fault": "candidate_failure",
+        "fault_after": 5,
+        "order": [
+          "A_READ",
+          "B_READ",
+          "B_LIMIT",
+          "C_READ",
+          "C_WRITE",
+          "A_RESERVE",
+          "A_ROUTE"
+        ],
+        "reason": "Fixed evaluation v1: routing with candidate_failure. Public regression fixture; expected outcomes are kept outside model contexts."
+      },
+      "expected": {
+        "task": "defer",
+        "base_units": 46,
+        "limit": 49,
+        "max_repair_units": 3,
+        "protected_kind": "routing"
+      }
+    },
+    {
+      "id": "dependency-candidate_failure",
+      "challenge": {
+        "schema_version": "agent-rehearsal-challenge-proposal-v1",
+        "parameters": {
+          "stable_units": 40,
+          "candidate_units": 8,
+          "extra_units": 6,
+          "initial_limit": 60,
+          "new_limit": 51
+        },
+        "scenario": "dependency",
+        "fault": "candidate_failure",
+        "fault_after": 5,
+        "order": [
+          "A_READ",
+          "B_READ",
+          "B_LIMIT",
+          "C_READ",
+          "C_WRITE",
+          "A_RESERVE",
+          "A_ROUTE"
+        ],
+        "reason": "Fixed evaluation v1: dependency with candidate_failure. Public regression fixture; expected outcomes are kept outside model contexts."
+      },
+      "expected": {
+        "task": "defer",
+        "base_units": 48,
+        "limit": 51,
+        "max_repair_units": 3,
+        "protected_kind": "dependency"
+      }
+    },
+    {
+      "id": "routing-fallback_unhealthy",
+      "challenge": {
+        "schema_version": "agent-rehearsal-challenge-proposal-v1",
+        "parameters": {
+          "stable_units": 42,
+          "candidate_units": 7,
+          "extra_units": 6,
+          "initial_limit": 61,
+          "new_limit": 52
+        },
+        "scenario": "routing",
+        "fault": "fallback_unhealthy",
+        "fault_after": 5,
+        "order": [
+          "A_READ",
+          "B_READ",
+          "B_LIMIT",
+          "C_READ",
+          "C_WRITE",
+          "A_RESERVE",
+          "A_ROUTE"
+        ],
+        "reason": "Fixed evaluation v1: routing with fallback_unhealthy. Public regression fixture; expected outcomes are kept outside model contexts."
+      },
+      "expected": {
+        "task": "defer",
+        "base_units": 49,
+        "limit": 52,
+        "max_repair_units": 3,
+        "protected_kind": "routing"
+      }
+    },
+    {
+      "id": "dependency-fallback_unhealthy",
+      "challenge": {
+        "schema_version": "agent-rehearsal-challenge-proposal-v1",
+        "parameters": {
+          "stable_units": 43,
+          "candidate_units": 8,
+          "extra_units": 6,
+          "initial_limit": 63,
+          "new_limit": 54
+        },
+        "scenario": "dependency",
+        "fault": "fallback_unhealthy",
+        "fault_after": 5,
+        "order": [
+          "A_READ",
+          "B_READ",
+          "B_LIMIT",
+          "C_READ",
+          "C_WRITE",
+          "A_RESERVE",
+          "A_ROUTE"
+        ],
+        "reason": "Fixed evaluation v1: dependency with fallback_unhealthy. Public regression fixture; expected outcomes are kept outside model contexts."
+      },
+      "expected": {
+        "task": "defer",
+        "base_units": 51,
+        "limit": 54,
+        "max_repair_units": 3,
+        "protected_kind": "dependency"
+      }
+    },
+    {
+      "id": "routing-original-success",
+      "challenge": {
+        "schema_version": "agent-rehearsal-challenge-proposal-v1",
+        "parameters": {
+          "stable_units": 47,
+          "candidate_units": 9,
+          "extra_units": 4,
+          "initial_limit": 71,
+          "new_limit": 63
+        },
+        "scenario": "routing",
+        "fault": "metrics_at_limit",
+        "fault_after": 5,
+        "order": [
+          "A_READ",
+          "A_RESERVE",
+          "B_READ",
+          "B_LIMIT",
+          "C_READ",
+          "C_WRITE",
+          "A_ROUTE"
+        ],
+        "reason": "Successful original reservation control; no repair request should be sent."
+      },
+      "expected": {
+        "task": "original_success",
+        "base_units": 56,
+        "limit": 63,
+        "max_repair_units": 0,
+        "protected_kind": "routing",
+        "final_units": 60
+      }
+    },
+    {
+      "id": "dependency-original-success",
+      "challenge": {
+        "schema_version": "agent-rehearsal-challenge-proposal-v1",
+        "parameters": {
+          "stable_units": 48,
+          "candidate_units": 9,
+          "extra_units": 4,
+          "initial_limit": 72,
+          "new_limit": 64
+        },
+        "scenario": "dependency",
+        "fault": "metrics_at_limit",
+        "fault_after": 5,
+        "order": [
+          "A_READ",
+          "A_RESERVE",
+          "B_READ",
+          "B_LIMIT",
+          "C_READ",
+          "C_WRITE",
+          "A_ROUTE"
+        ],
+        "reason": "Successful original reservation control; no repair request should be sent."
+      },
+      "expected": {
+        "task": "original_success",
+        "base_units": 57,
+        "limit": 64,
+        "max_repair_units": 0,
+        "protected_kind": "dependency",
+        "final_units": 61
+      }
+    }
+  ]
+}

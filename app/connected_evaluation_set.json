@@ -1,0 +1,216 @@
+{
+  "schema_version": "agent-rehearsal-connected-evaluation-set-v1",
+  "set_id": "connected-evaluation-20261022-v1",
+  "frozen_on": "2026-10-22",
+  "scope": "Transparent fixed regression of two known families and six fault profiles. Six confirmation combinations are reserved before live use; this is not independent blinding or unseen-family validation. Expected outcomes are never sent to role providers. Repair cases continue on the original runtime through exact fixture owner review; safe deferral ends before execution/recovery.",
+  "cases": [
+    {
+      "id": "dev-01-routing",
+      "split": "development",
+      "scenario": "routing",
+      "fault": "metrics_at_limit",
+      "inputs": {
+        "stable_units": 10,
+        "candidate_units": 5,
+        "headroom_units": 1,
+        "extra_units": 4
+      },
+      "expected_task": "repair"
+    },
+    {
+      "id": "dev-02-dependency",
+      "split": "development",
+      "scenario": "dependency",
+      "fault": "metrics_at_limit",
+      "inputs": {
+        "stable_units": 35,
+        "candidate_units": 15,
+        "headroom_units": 2,
+        "extra_units": 9
+      },
+      "expected_task": "repair"
+    },
+    {
+      "id": "dev-03-routing",
+      "split": "development",
+      "scenario": "routing",
+      "fault": "metrics_expired",
+      "inputs": {
+        "stable_units": 18,
+        "candidate_units": 11,
+        "headroom_units": 2,
+        "extra_units": 7
+      },
+      "expected_task": "defer"
+    },
+    {
+      "id": "dev-04-dependency",
+      "split": "development",
+      "scenario": "dependency",
+      "fault": "metrics_expired",
+      "inputs": {
+        "stable_units": 44,
+        "candidate_units": 21,
+        "headroom_units": 3,
+        "extra_units": 12
+      },
+      "expected_task": "defer"
+    },
+    {
+      "id": "dev-05-routing",
+      "split": "development",
+      "scenario": "routing",
+      "fault": "workflow_failure",
+      "inputs": {
+        "stable_units": 22,
+        "candidate_units": 9,
+        "headroom_units": 1,
+        "extra_units": 6
+      },
+      "expected_task": "defer"
+    },
+    {
+      "id": "dev-06-dependency",
+      "split": "development",
+      "scenario": "dependency",
+      "fault": "candidate_failure",
+      "inputs": {
+        "stable_units": 53,
+        "candidate_units": 17,
+        "headroom_units": 2,
+        "extra_units": 8
+      },
+      "expected_task": "defer"
+    },
+    {
+      "id": "dev-07-routing",
+      "split": "development",
+      "scenario": "routing",
+      "fault": "fallback_unhealthy",
+      "inputs": {
+        "stable_units": 31,
+        "candidate_units": 14,
+        "headroom_units": 3,
+        "extra_units": 10
+      },
+      "expected_task": "defer"
+    },
+    {
+      "id": "dev-08-dependency",
+      "split": "development",
+      "scenario": "dependency",
+      "fault": "fallback_unhealthy",
+      "inputs": {
+        "stable_units": 65,
+        "candidate_units": 25,
+        "headroom_units": 2,
+        "extra_units": 11
+      },
+      "expected_task": "defer"
+    },
+    {
+      "id": "dev-09-routing",
+      "split": "development",
+      "scenario": "routing",
+      "fault": "stop_timeout",
+      "inputs": {
+        "stable_units": 80,
+        "candidate_units": 40,
+        "headroom_units": 3,
+        "extra_units": 20
+      },
+      "expected_task": "repair"
+    },
+    {
+      "id": "dev-10-dependency",
+      "split": "development",
+      "scenario": "dependency",
+      "fault": "stop_timeout",
+      "inputs": {
+        "stable_units": 27,
+        "candidate_units": 19,
+        "headroom_units": 1,
+        "extra_units": 5
+      },
+      "expected_task": "repair"
+    },
+    {
+      "id": "confirm-01-routing",
+      "split": "confirmation",
+      "scenario": "routing",
+      "fault": "metrics_at_limit",
+      "inputs": {
+        "stable_units": 16,
+        "candidate_units": 23,
+        "headroom_units": 2,
+        "extra_units": 8
+      },
+      "expected_task": "repair"
+    },
+    {
+      "id": "confirm-02-dependency",
+      "split": "confirmation",
+      "scenario": "dependency",
+      "fault": "metrics_at_limit",
+      "inputs": {
+        "stable_units": 71,
+        "candidate_units": 33,
+        "headroom_units": 3,
+        "extra_units": 17
+      },
+      "expected_task": "repair"
+    },
+    {
+      "id": "confirm-03-routing",
+      "split": "confirmation",
+      "scenario": "routing",
+      "fault": "candidate_failure",
+      "inputs": {
+        "stable_units": 45,
+        "candidate_units": 29,
+        "headroom_units": 1,
+        "extra_units": 9
+      },
+      "expected_task": "defer"
+    },
+    {
+      "id": "confirm-04-dependency",
+      "split": "confirmation",
+      "scenario": "dependency",
+      "fault": "workflow_failure",
+      "inputs": {
+        "stable_units": 38,
+        "candidate_units": 18,
+        "headroom_units": 2,
+        "extra_units": 13
+      },
+      "expected_task": "defer"
+    },
+    {
+      "id": "confirm-05-routing",
+      "split": "confirmation",
+      "scenario": "routing",
+      "fault": "stop_timeout",
+      "inputs": {
+        "stable_units": 62,
+        "candidate_units": 26,
+        "headroom_units": 3,
+        "extra_units": 14
+      },
+      "expected_task": "repair"
+    },
+    {
+      "id": "confirm-06-dependency",
+      "split": "confirmation",
+      "scenario": "dependency",
+      "fault": "fallback_unhealthy",
+      "inputs": {
+        "stable_units": 29,
+        "candidate_units": 16,
+        "headroom_units": 1,
+        "extra_units": 7
+      },
+      "expected_task": "defer"
+    }
+  ]
+}

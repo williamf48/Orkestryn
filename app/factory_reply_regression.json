@@ -1,0 +1,115 @@
+{
+  "scope": "Recorded response supplied by the project owner; offline regression only, no new provider request or provider attestation. Workspace identifiers and account data omitted.",
+  "workflow": {
+    "goal": "Coordinate the balanced inference workload while preserving other owners.",
+    "requests": [
+      {
+        "actor": "A",
+        "after": [],
+        "id": "deploy-large",
+        "parameters": {
+          "units": 20
+        },
+        "priority": 3,
+        "tool": "reserve_capacity"
+      },
+      {
+        "actor": "B",
+        "after": [],
+        "id": "budget-70",
+        "parameters": {
+          "limit": 70
+        },
+        "priority": 5,
+        "tool": "set_capacity_limit"
+      },
+      {
+        "actor": "C",
+        "after": [],
+        "id": "customer-route",
+        "parameters": {
+          "candidate_percent": 20
+        },
+        "priority": 4,
+        "tool": "set_route"
+      },
+      {
+        "actor": "C",
+        "after": [],
+        "id": "customer-job",
+        "parameters": {
+          "dependency_id": "C-mission-job"
+        },
+        "priority": 4,
+        "tool": "add_dependency"
+      },
+      {
+        "actor": "A",
+        "after": [],
+        "id": "deploy-small",
+        "parameters": {
+          "units": 5
+        },
+        "priority": 2,
+        "tool": "reserve_capacity"
+      }
+    ],
+    "version": "agent-rehearsal-workflow-planner-v1"
+  },
+  "reply": {
+    "schema_version": "agent-rehearsal-workflow-factory-v1",
+    "requests": [
+      {
+        "actor": "A",
+        "after": [],
+        "id": "deploy-large",
+        "parameters": {
+          "units": 15
+        },
+        "priority": 3,
+        "tool": "reserve_capacity"
+      },
+      {
+        "actor": "B",
+        "after": [],
+        "id": "budget-70",
+        "parameters": {
+          "limit": 70
+        },
+        "priority": 5,
+        "tool": "set_capacity_limit"
+      },
+      {
+        "actor": "C",
+        "after": [],
+        "id": "customer-route",
+        "parameters": {
+          "candidate_percent": 12
+        },
+        "priority": 4,
+        "tool": "set_route"
+      },
+      {
+        "actor": "C",
+        "after": [],
+        "id": "customer-job",
+        "parameters": {
+          "dependency_id": "C-mission-job"
+        },
+        "priority": 4,
+        "tool": "add_dependency"
+      },
+      {
+        "actor": "A",
+        "after": [],
+        "id": "deploy-small",
+        "parameters": {
+          "units": 5
+        },
+        "priority": 2,
+        "tool": "reserve_capacity"
+      }
+    ],
+    "reason": "Adjusted reserve_capacity units to better balance capacity usage and tuned candidate_percent for route selection to improve load distribution while preserving all other constraints."
+  }
+}
