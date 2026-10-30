@@ -1,0 +1,3 @@
+# Core dashboard, scripted demo and direct browser-key Nebius calls use Python's standard library.
+# Optional SDK for the legacy CLI/live integrations:
+-r app/requirements.txt

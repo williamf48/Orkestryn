@@ -1,0 +1,3 @@
+# Preserve exact release bytes on Windows and Linux: source hashes bind evidence.
+# These files remain ordinary diffable text; only newline conversion is disabled.
+* -text
