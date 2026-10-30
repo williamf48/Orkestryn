@@ -1,5 +1,6 @@
 """Regression checks for crashes, timeouts, and contradictory worker reports."""
 import importlib.util
+from collections import Counter
 import io
 import json
 from pathlib import Path
@@ -67,6 +68,22 @@ class RunnerTests(unittest.TestCase):
         self.assertEqual(result.testsRun, 2)
         self.assertEqual(len(result.errors), 1)
         self.assertEqual(result.failures, [])
+
+    def test_large_registered_classes_cover_every_method_exactly_once(self):
+        for name in runner.PARTITIONS:
+            module = runner.importlib.import_module(name)
+            case = getattr(module, runner.project.MODULES[name])
+            suite = unittest.defaultTestLoader.loadTestsFromTestCase(case)
+            expected = Counter(test.id() for test in suite)
+            selected = []
+            reports = []
+            for task_name, partition in runner.worker_tasks([name]):
+                part = runner.partition_suite(suite, partition)
+                selected.extend(test.id() for test in part)
+                reports.append(runner.result_name(task_name, partition))
+                self.assertGreater(part.countTestCases(), 0)
+            self.assertEqual(Counter(selected), expected)
+            self.assertEqual(len(reports), len(set(reports)))
 
 
 if __name__ == '__main__':

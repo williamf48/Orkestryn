@@ -18,6 +18,29 @@ APP = ROOT / 'app'
 sys.path.insert(0, str(APP))
 import project
 
+PARTITIONS = {'connected_team_tests': 3, 'mission_tests': 4}
+
+
+def worker_tasks(names):
+    for name in names:
+        count = PARTITIONS.get(name, 1)
+        for index in range(count):
+            yield name, (index, count) if count > 1 else None
+
+
+def result_name(name, partition=None):
+    return name if partition is None else '%s-part-%s-of-%s' % (name, partition[0]+1, partition[1])
+
+
+def partition_suite(suite, partition=None):
+    if partition is None:
+        return suite
+    index, count = partition
+    tests = list(suite)
+    if not 0 <= index < count <= len(tests):
+        raise ValueError('A test partition must select at least one registered test.')
+    return unittest.TestSuite(tests[index::count])
+
 
 class DiagnosticResult(unittest.TextTestResult):
     """Keep earlier failures visible even if a later test hangs."""
@@ -49,11 +72,12 @@ def error_result(name, status, detail):
             'failures': 0, 'errors': 1, 'skipped': 0, 'detail': detail}
 
 
-def run_module(name, output):
+def run_module(name, output, partition=None):
     try:
         before = project.source_hashes()
         module = importlib.import_module(name)
-        suite = unittest.defaultTestLoader.loadTestsFromTestCase(getattr(module, project.MODULES[name]))
+        suite = partition_suite(unittest.defaultTestLoader.loadTestsFromTestCase(
+            getattr(module, project.MODULES[name])), partition)
         expected = suite.countTestCases()
         faulthandler.dump_traceback_later(270)
         try:
@@ -72,7 +96,7 @@ def run_module(name, output):
         detail = traceback.format_exc()
         print(detail, file=sys.stderr, flush=True)
         value = error_result(name, 'MODULE_ERROR', detail)
-    write_result(output, name, value)
+    write_result(output, result_name(name, partition), value)
     return 0 if value['passed'] else 1
 
 
@@ -84,11 +108,18 @@ def offline_environment():
     return environment
 
 
-def run_one(name, output, timeout=300, runner=None):
+def run_one(name, output, timeout=300, runner=None, partition=None):
     runner = Path(runner or __file__).resolve()
+    report_name = result_name(name, partition)
     command = [sys.executable, '-B', '-S', str(runner), '--module', name, '--output', str(output)]
+    if partition is not None:
+        command += ['--partition', *map(str, partition)]
+    def finish(value):
+        value.update(report_name=report_name, partition=partition)
+        write_result(output, report_name, value)
+        return value
     try:
-        with (output / (name + '.log')).open('w', encoding='utf-8') as log:
+        with (output / (report_name + '.log')).open('w', encoding='utf-8') as log:
             try:
                 completed = subprocess.run(command, cwd=APP, env=offline_environment(),
                                            stdout=log, stderr=subprocess.STDOUT, timeout=timeout)
@@ -96,9 +127,8 @@ def run_one(name, output, timeout=300, runner=None):
                 detail = 'Module exceeded the %.3g-second process limit.' % timeout
                 log.write('\n' + detail + '\n')
                 value = error_result(name, 'TIMED_OUT', detail)
-                write_result(output, name, value)
-                return value
-        report = output / (name + '.json')
+                return finish(value)
+        report = output / (report_name + '.json')
         if not report.exists():
             value = error_result(name, 'MISSING_REPORT', 'Worker exited without writing its test report.')
         else:
@@ -111,36 +141,39 @@ def run_one(name, output, timeout=300, runner=None):
         value['exit_code'] = completed.returncode
     except Exception:
         value = error_result(name, 'RUNNER_ERROR', traceback.format_exc())
-    write_result(output, name, value)
-    return value
+    return finish(value)
 
 
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--jobs', type=int, default=4)
+    parser.add_argument('--jobs', type=int, default=2 if os.name == 'nt' else 4)
     parser.add_argument('--output', type=Path)
+    parser.add_argument('--partition', type=int, nargs=2, metavar=('INDEX', 'COUNT'), help=argparse.SUPPRESS)
     choice = parser.add_mutually_exclusive_group()
     choice.add_argument('--module', choices=list(project.MODULES))
     choice.add_argument('--modules', nargs='+', choices=list(project.MODULES))
     args = parser.parse_args(argv)
     if not 1 <= args.jobs <= 8:
         parser.error('--jobs must be between 1 and 8')
+    if args.partition and not args.module:
+        parser.error('--partition requires a single --module worker')
     output = (args.output or Path(tempfile.mkdtemp(prefix='orkestryn-tests-'))).resolve()
     output.mkdir(parents=True, exist_ok=True)
     if args.module:
-        return run_module(args.module, output)
+        return run_module(args.module, output, args.partition)
     before = project.source_hashes()
     started = time.monotonic()
     results = []
     names = list(dict.fromkeys(args.modules or project.MODULES))
     with concurrent.futures.ThreadPoolExecutor(max_workers=args.jobs) as pool:
-        for future in concurrent.futures.as_completed([pool.submit(run_one, name, output) for name in names]):
+        for future in concurrent.futures.as_completed([
+                pool.submit(run_one, name, output, partition=partition) for name, partition in worker_tasks(names)]):
             value = future.result()
             results.append(value)
-            print(value['module'] + ': ' + value['status'], flush=True)
+            print(value['report_name'] + ': ' + value['status'], flush=True)
             if not value['passed']:
-                print('--- ' + value['module'] + ' diagnostic log ---', flush=True)
-                print((output / (value['module'] + '.log')).read_text(encoding='utf-8', errors='replace'), flush=True)
+                print('--- ' + value['report_name'] + ' diagnostic log ---', flush=True)
+                print((output / (value['report_name'] + '.log')).read_text(encoding='utf-8', errors='replace'), flush=True)
     value = {'passed': all(r['passed'] for r in results) and before == project.source_hashes(),
              'tests_run': sum(r['tests_run'] for r in results),
              'failures': sum(r['failures'] for r in results), 'errors': sum(r['errors'] for r in results),
