@@ -1,0 +1,27 @@
+name: Publish verified release
+on:
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+      - uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405
+        with:
+          python-version: '3.12'
+      - name: Verify source and run offline regression
+        run: |
+          python scripts/check_repository.py
+          python scripts/test.py
+      - name: Build whitelisted downloadable test build
+        run: python scripts/build_release.py --output "$RUNNER_TEMP/orkestryn-release"
+      - name: Publish release with the tested commit
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          release_tag="$(python -c 'import json; print(json.load(open("app/bundle_manifest.json"))["package_version"])')"
+          archive_path="$RUNNER_TEMP/orkestryn-release/Orkestryn-$release_tag-source.zip"
+          gh release create "$release_tag" "$archive_path" "$RUNNER_TEMP/orkestryn-release/Orkestryn.pyz" "$RUNNER_TEMP/orkestryn-release/SHA256SUMS.txt" --target "$GITHUB_SHA" --title "Orkestryn $release_tag" --notes-file CHANGELOG.md
