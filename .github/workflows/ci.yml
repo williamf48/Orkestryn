@@ -56,6 +56,12 @@ jobs:
       - name: Run Safety Lab interface checks
         if: ${{ !cancelled() }}
         run: python -B -S app/safety_ui_checks.py --output "${{ runner.temp }}/safety-ui-checks.json"
+      - name: Build the portable distribution
+        if: ${{ !cancelled() }}
+        run: python -B -S scripts/build_release.py --output "${{ runner.temp }}/portable-build"
+      - name: Exercise the packaged walkthrough
+        if: ${{ !cancelled() }}
+        run: python -B "${{ runner.temp }}/portable-build/Orkestryn.pyz" --check --directory "${{ runner.temp }}/portable-smoke"
       - name: Retain test diagnostics
         if: ${{ !cancelled() }}
         uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
