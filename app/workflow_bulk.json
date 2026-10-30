@@ -1,0 +1,286 @@
+{
+  "version": "agent-rehearsal-workflow-planner-v1",
+  "goal": "Coordinate the bulk inference workload while preserving other owners.",
+  "requests": [
+    {
+      "actor": "B",
+      "id": "budget-70",
+      "tool": "set_capacity_limit",
+      "parameters": {
+        "limit": 70
+      },
+      "priority": 5,
+      "after": []
+    },
+    {
+      "actor": "C",
+      "id": "customer-route",
+      "tool": "set_route",
+      "parameters": {
+        "candidate_percent": 20
+      },
+      "priority": 4,
+      "after": []
+    },
+    {
+      "actor": "A",
+      "id": "reserve-0",
+      "tool": "reserve_capacity",
+      "parameters": {
+        "units": 1
+      },
+      "priority": 2,
+      "after": []
+    },
+    {
+      "actor": "A",
+      "id": "reserve-1",
+      "tool": "reserve_capacity",
+      "parameters": {
+        "units": 1
+      },
+      "priority": 2,
+      "after": []
+    },
+    {
+      "actor": "A",
+      "id": "reserve-2",
+      "tool": "reserve_capacity",
+      "parameters": {
+        "units": 1
+      },
+      "priority": 2,
+      "after": []
+    },
+    {
+      "actor": "A",
+      "id": "reserve-3",
+      "tool": "reserve_capacity",
+      "parameters": {
+        "units": 1
+      },
+      "priority": 2,
+      "after": []
+    },
+    {
+      "actor": "A",
+      "id": "reserve-4",
+      "tool": "reserve_capacity",
+      "parameters": {
+        "units": 1
+      },
+      "priority": 2,
+      "after": []
+    },
+    {
+      "actor": "A",
+      "id": "reserve-5",
+      "tool": "reserve_capacity",
+      "parameters": {
+        "units": 1
+      },
+      "priority": 2,
+      "after": []
+    },
+    {
+      "actor": "A",
+      "id": "reserve-6",
+      "tool": "reserve_capacity",
+      "parameters": {
+        "units": 1
+      },
+      "priority": 2,
+      "after": []
+    },
+    {
+      "actor": "A",
+      "id": "reserve-7",
+      "tool": "reserve_capacity",
+      "parameters": {
+        "units": 1
+      },
+      "priority": 2,
+      "after": []
+    },
+    {
+      "actor": "C",
+      "id": "job-0",
+      "tool": "add_dependency",
+      "parameters": {
+        "dependency_id": "customer-job-0"
+      },
+      "priority": 3,
+      "after": []
+    },
+    {
+      "actor": "C",
+      "id": "job-1",
+      "tool": "add_dependency",
+      "parameters": {
+        "dependency_id": "customer-job-1"
+      },
+      "priority": 3,
+      "after": []
+    },
+    {
+      "actor": "C",
+      "id": "job-2",
+      "tool": "add_dependency",
+      "parameters": {
+        "dependency_id": "customer-job-2"
+      },
+      "priority": 3,
+      "after": []
+    },
+    {
+      "actor": "C",
+      "id": "job-3",
+      "tool": "add_dependency",
+      "parameters": {
+        "dependency_id": "customer-job-3"
+      },
+      "priority": 3,
+      "after": []
+    },
+    {
+      "actor": "C",
+      "id": "job-4",
+      "tool": "add_dependency",
+      "parameters": {
+        "dependency_id": "customer-job-4"
+      },
+      "priority": 3,
+      "after": []
+    },
+    {
+      "actor": "C",
+      "id": "job-5",
+      "tool": "add_dependency",
+      "parameters": {
+        "dependency_id": "customer-job-5"
+      },
+      "priority": 3,
+      "after": []
+    },
+    {
+      "actor": "C",
+      "id": "job-6",
+      "tool": "add_dependency",
+      "parameters": {
+        "dependency_id": "customer-job-6"
+      },
+      "priority": 3,
+      "after": []
+    },
+    {
+      "actor": "C",
+      "id": "job-7",
+      "tool": "add_dependency",
+      "parameters": {
+        "dependency_id": "customer-job-7"
+      },
+      "priority": 3,
+      "after": []
+    },
+    {
+      "actor": "C",
+      "id": "job-8",
+      "tool": "add_dependency",
+      "parameters": {
+        "dependency_id": "customer-job-8"
+      },
+      "priority": 3,
+      "after": []
+    },
+    {
+      "actor": "C",
+      "id": "job-9",
+      "tool": "add_dependency",
+      "parameters": {
+        "dependency_id": "customer-job-9"
+      },
+      "priority": 3,
+      "after": []
+    },
+    {
+      "actor": "C",
+      "id": "job-10",
+      "tool": "add_dependency",
+      "parameters": {
+        "dependency_id": "customer-job-10"
+      },
+      "priority": 3,
+      "after": []
+    },
+    {
+      "actor": "C",
+      "id": "job-11",
+      "tool": "add_dependency",
+      "parameters": {
+        "dependency_id": "customer-job-11"
+      },
+      "priority": 3,
+      "after": []
+    },
+    {
+      "actor": "C",
+      "id": "job-12",
+      "tool": "add_dependency",
+      "parameters": {
+        "dependency_id": "customer-job-12"
+      },
+      "priority": 3,
+      "after": []
+    },
+    {
+      "actor": "C",
+      "id": "job-13",
+      "tool": "add_dependency",
+      "parameters": {
+        "dependency_id": "customer-job-13"
+      },
+      "priority": 3,
+      "after": []
+    },
+    {
+      "actor": "C",
+      "id": "job-14",
+      "tool": "add_dependency",
+      "parameters": {
+        "dependency_id": "customer-job-14"
+      },
+      "priority": 3,
+      "after": []
+    },
+    {
+      "actor": "C",
+      "id": "job-15",
+      "tool": "add_dependency",
+      "parameters": {
+        "dependency_id": "customer-job-15"
+      },
+      "priority": 3,
+      "after": []
+    },
+    {
+      "actor": "C",
+      "id": "job-16",
+      "tool": "add_dependency",
+      "parameters": {
+        "dependency_id": "customer-job-16"
+      },
+      "priority": 3,
+      "after": []
+    },
+    {
+      "actor": "C",
+      "id": "job-17",
+      "tool": "add_dependency",
+      "parameters": {
+        "dependency_id": "customer-job-17"
+      },
+      "priority": 3,
+      "after": []
+    }
+  ]
+}

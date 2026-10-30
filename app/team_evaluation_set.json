@@ -1,0 +1,132 @@
+{
+  "schema_version": "agent-rehearsal-team-evaluation-set-v1",
+  "set_id": "team-evaluation-20261021-v1",
+  "frozen_on": "2026-10-21",
+  "scope": "Fixed, transparent regression within two known scenario templates. Confirmation rows reserve new numeric combinations, not unseen families or an independently blinded holdout. Factory receives registered numeric inputs; expected decisions are not sent to models.",
+  "splits": {
+    "development": "Six public cases for implementation and prompt development.",
+    "confirmation": "Four reserved numeric combinations. Selected only with the explicit confirmation split; opening is recorded before any model request."
+  },
+  "cases": [
+    {
+      "id": "dev-routing-low",
+      "split": "development",
+      "scenario": "routing",
+      "inputs": {
+        "stable_units": 10,
+        "candidate_units": 5,
+        "headroom_units": 1,
+        "extra_units": 4
+      },
+      "expected_task": "repair_then_preserve_shared_work"
+    },
+    {
+      "id": "dev-dependency-low",
+      "split": "development",
+      "scenario": "dependency",
+      "inputs": {
+        "stable_units": 10,
+        "candidate_units": 5,
+        "headroom_units": 1,
+        "extra_units": 4
+      },
+      "expected_task": "repair_then_preserve_shared_work"
+    },
+    {
+      "id": "dev-routing-middle",
+      "split": "development",
+      "scenario": "routing",
+      "inputs": {
+        "stable_units": 35,
+        "candidate_units": 15,
+        "headroom_units": 2,
+        "extra_units": 9
+      },
+      "expected_task": "repair_then_preserve_shared_work"
+    },
+    {
+      "id": "dev-dependency-middle",
+      "split": "development",
+      "scenario": "dependency",
+      "inputs": {
+        "stable_units": 35,
+        "candidate_units": 15,
+        "headroom_units": 2,
+        "extra_units": 9
+      },
+      "expected_task": "repair_then_preserve_shared_work"
+    },
+    {
+      "id": "dev-routing-high",
+      "split": "development",
+      "scenario": "routing",
+      "inputs": {
+        "stable_units": 80,
+        "candidate_units": 40,
+        "headroom_units": 3,
+        "extra_units": 20
+      },
+      "expected_task": "repair_then_preserve_shared_work"
+    },
+    {
+      "id": "dev-dependency-high",
+      "split": "development",
+      "scenario": "dependency",
+      "inputs": {
+        "stable_units": 80,
+        "candidate_units": 40,
+        "headroom_units": 3,
+        "extra_units": 20
+      },
+      "expected_task": "repair_then_preserve_shared_work"
+    },
+    {
+      "id": "confirm-routing-mix_a",
+      "split": "confirmation",
+      "scenario": "routing",
+      "inputs": {
+        "stable_units": 18,
+        "candidate_units": 27,
+        "headroom_units": 3,
+        "extra_units": 13
+      },
+      "expected_task": "repair_then_preserve_shared_work"
+    },
+    {
+      "id": "confirm-dependency-mix_a",
+      "split": "confirmation",
+      "scenario": "dependency",
+      "inputs": {
+        "stable_units": 18,
+        "candidate_units": 27,
+        "headroom_units": 3,
+        "extra_units": 13
+      },
+      "expected_task": "repair_then_preserve_shared_work"
+    },
+    {
+      "id": "confirm-routing-mix_b",
+      "split": "confirmation",
+      "scenario": "routing",
+      "inputs": {
+        "stable_units": 64,
+        "candidate_units": 9,
+        "headroom_units": 1,
+        "extra_units": 17
+      },
+      "expected_task": "repair_then_preserve_shared_work"
+    },
+    {
+      "id": "confirm-dependency-mix_b",
+      "split": "confirmation",
+      "scenario": "dependency",
+      "inputs": {
+        "stable_units": 64,
+        "candidate_units": 9,
+        "headroom_units": 1,
+        "extra_units": 17
+      },
+      "expected_task": "repair_then_preserve_shared_work"
+    }
+  ]
+}

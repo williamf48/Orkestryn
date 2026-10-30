@@ -1,0 +1,166 @@
+{
+  "version": "agent-rehearsal-workflow-planner-v1",
+  "goal": "Coordinate the dependency-chain inference workload while preserving other owners.",
+  "requests": [
+    {
+      "actor": "A",
+      "id": "deploy-large",
+      "tool": "reserve_capacity",
+      "parameters": {
+        "units": 20
+      },
+      "priority": 3,
+      "after": []
+    },
+    {
+      "actor": "B",
+      "id": "budget-70",
+      "tool": "set_capacity_limit",
+      "parameters": {
+        "limit": 70
+      },
+      "priority": 5,
+      "after": []
+    },
+    {
+      "actor": "A",
+      "id": "deploy-small",
+      "tool": "reserve_capacity",
+      "parameters": {
+        "units": 5
+      },
+      "priority": 2,
+      "after": []
+    },
+    {
+      "actor": "C",
+      "id": "job-0",
+      "tool": "add_dependency",
+      "parameters": {
+        "dependency_id": "pipeline-stage-0"
+      },
+      "priority": 3,
+      "after": []
+    },
+    {
+      "actor": "C",
+      "id": "job-1",
+      "tool": "add_dependency",
+      "parameters": {
+        "dependency_id": "pipeline-stage-1"
+      },
+      "priority": 3,
+      "after": [
+        "job-0"
+      ]
+    },
+    {
+      "actor": "C",
+      "id": "job-2",
+      "tool": "add_dependency",
+      "parameters": {
+        "dependency_id": "pipeline-stage-2"
+      },
+      "priority": 3,
+      "after": [
+        "job-1"
+      ]
+    },
+    {
+      "actor": "C",
+      "id": "job-3",
+      "tool": "add_dependency",
+      "parameters": {
+        "dependency_id": "pipeline-stage-3"
+      },
+      "priority": 3,
+      "after": [
+        "job-2"
+      ]
+    },
+    {
+      "actor": "C",
+      "id": "job-4",
+      "tool": "add_dependency",
+      "parameters": {
+        "dependency_id": "pipeline-stage-4"
+      },
+      "priority": 3,
+      "after": [
+        "job-3"
+      ]
+    },
+    {
+      "actor": "C",
+      "id": "job-5",
+      "tool": "add_dependency",
+      "parameters": {
+        "dependency_id": "pipeline-stage-5"
+      },
+      "priority": 3,
+      "after": [
+        "job-4"
+      ]
+    },
+    {
+      "actor": "C",
+      "id": "job-6",
+      "tool": "add_dependency",
+      "parameters": {
+        "dependency_id": "pipeline-stage-6"
+      },
+      "priority": 3,
+      "after": [
+        "job-5"
+      ]
+    },
+    {
+      "actor": "C",
+      "id": "job-7",
+      "tool": "add_dependency",
+      "parameters": {
+        "dependency_id": "pipeline-stage-7"
+      },
+      "priority": 3,
+      "after": [
+        "job-6"
+      ]
+    },
+    {
+      "actor": "C",
+      "id": "job-8",
+      "tool": "add_dependency",
+      "parameters": {
+        "dependency_id": "pipeline-stage-8"
+      },
+      "priority": 3,
+      "after": [
+        "job-7"
+      ]
+    },
+    {
+      "actor": "C",
+      "id": "job-9",
+      "tool": "add_dependency",
+      "parameters": {
+        "dependency_id": "pipeline-stage-9"
+      },
+      "priority": 3,
+      "after": [
+        "job-8"
+      ]
+    },
+    {
+      "id": "customer-route",
+      "tool": "set_route",
+      "parameters": {
+        "candidate_percent": 20
+      },
+      "priority": 4,
+      "actor": "C",
+      "after": [
+        "job-9"
+      ]
+    }
+  ]
+}

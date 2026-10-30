@@ -1,0 +1,56 @@
+{
+  "version": "agent-rehearsal-workflow-planner-v1",
+  "goal": "Coordinate the balanced inference workload while preserving other owners.",
+  "requests": [
+    {
+      "actor": "A",
+      "id": "deploy-large",
+      "tool": "reserve_capacity",
+      "parameters": {
+        "units": 20
+      },
+      "priority": 3,
+      "after": []
+    },
+    {
+      "actor": "B",
+      "id": "budget-70",
+      "tool": "set_capacity_limit",
+      "parameters": {
+        "limit": 70
+      },
+      "priority": 5,
+      "after": []
+    },
+    {
+      "actor": "C",
+      "id": "customer-route",
+      "tool": "set_route",
+      "parameters": {
+        "candidate_percent": 20
+      },
+      "priority": 4,
+      "after": []
+    },
+    {
+      "actor": "C",
+      "id": "customer-job",
+      "tool": "add_dependency",
+      "parameters": {
+        "dependency_id": "C-mission-job"
+      },
+      "priority": 4,
+      "after": []
+    },
+    {
+      "actor": "A",
+      "id": "deploy-small",
+      "tool": "reserve_capacity",
+      "parameters": {
+        "units": 5
+      },
+      "priority": 2,
+      "after": []
+    }
+  ]
+}
