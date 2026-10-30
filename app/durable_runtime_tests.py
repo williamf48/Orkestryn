@@ -238,10 +238,18 @@ class RuntimeTests(unittest.TestCase):
             conn.request('POST',path,json.dumps(body),headers);response=conn.getresponse();response.read();conn.close()
             self.assertIn(response.status,(400,403));self.assertTrue(r.state()['workers']['stable-v1']['alive'])
     def test_leases_stop_independent_worker_and_record_separate_teardown(self):
-        r,p=d.launch(self.root/'short',ttl=2);self.runtimes.append(r)
-        deadline=time.monotonic()+9
+        # The lease includes process startup. Two seconds can expire before a
+        # worker is ready on a shared runner, testing startup failure instead.
+        started=time.time()
+        r,p=d.launch(self.root/'short',ttl=30);self.runtimes.append(r)
+        expires=d.read(r.directory,'runtime.json')['expires_unix']
+        self.assertGreaterEqual(expires,started+30)
+        self.assertTrue(r.state()['workers']['stable-v1']['alive'])
+        deadline=time.monotonic()+max(0,expires-time.time())+9
         while not (r.directory/'teardown.json').exists() and time.monotonic()<deadline:time.sleep(.1)
         record=d.read(r.directory,'teardown.json');self.assertTrue(record['all_workers_stopped']);p.wait(5)
+        self.assertGreaterEqual(time.time(),expires)
+        self.assertTrue(all(worker['stopped'] for worker in record['workers']))
         with self.assertRaisesRegex(ValueError,'lease changed|torn-down'):d.launch(r.directory,restart_existing=True)
     def test_release_requires_os_exit_and_does_not_require_invented_exit_code(self):
         state={'routing':{'candidate-v2':0},'route_owner':'deploy-A'}

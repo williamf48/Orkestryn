@@ -50,7 +50,7 @@
     "downloadable_demo.py": "97d98a423d9d16031b7f36dcbfc4c27d1fa0c9072ce4c0c7cf42973c092eb8b2",
     "downloadable_demo_tests.py": "fc6aba5364bcfe754034335fb4f99c0ac8cd50e352b8b68900c988d9455185c7",
     "durable_runtime.py": "6a525e7ff39c069e9c1fdb1b9b0531409aab9ac0e0ea4a690fb4bfccc4cafb3e",
-    "durable_runtime_tests.py": "8a79bebb1577df79a82d3a5e784093d0acfcd10dccac05d484a9c0767d4c7c70",
+    "durable_runtime_tests.py": "a5ebd997cd430239eef59c760815940c144c602386cf2381d69673b0e9b5184f",
     "factory_publication_tests.py": "a9637309f79a00f482cf8fa1457afcf485faac12c37b1917a4f01ecf28c4ef49",
     "factory_reply_regression.json": "a8ed28d5523e3876a07fbd606833912089e010885eaf803437031cff0f24cd91",
     "governance_deferral_regression.json": "ea9ac045218fb8d48567db08ac88c0831f25ebacc071050cb494084bd358a7bb",
@@ -153,7 +153,7 @@
     "workflow_deployment_heavy.json": "936a973f4179865af91b0594ea09de08d28fa7631b689dbd0275ce156a6aad21",
     "workflow_planner.py": "d4c8a7d2a81244b6697863797b1800589d1ddef0ab3e76011072ed53e41d5115"
   },
-  "package_version": "2026.10.30-github-v1",
+  "package_version": "2026.10.30-github-v3",
   "repository_files_sha256": {},
   "source_sha256": {
     "acceptance.py": "50cc4c5c0aa7b8b5081ca3760255944488641109f51f54b062322d3737a9f0e1",
@@ -192,7 +192,7 @@
     "downloadable_demo.py": "97d98a423d9d16031b7f36dcbfc4c27d1fa0c9072ce4c0c7cf42973c092eb8b2",
     "downloadable_demo_tests.py": "fc6aba5364bcfe754034335fb4f99c0ac8cd50e352b8b68900c988d9455185c7",
     "durable_runtime.py": "6a525e7ff39c069e9c1fdb1b9b0531409aab9ac0e0ea4a690fb4bfccc4cafb3e",
-    "durable_runtime_tests.py": "8a79bebb1577df79a82d3a5e784093d0acfcd10dccac05d484a9c0767d4c7c70",
+    "durable_runtime_tests.py": "a5ebd997cd430239eef59c760815940c144c602386cf2381d69673b0e9b5184f",
     "factory_publication_tests.py": "a9637309f79a00f482cf8fa1457afcf485faac12c37b1917a4f01ecf28c4ef49",
     "hosted_server.py": "92a433aa0d55276d329a606c6e2a2ee5652f293e263754ef02477b55d4d2a083",
     "hosted_tests.py": "1feb2f293f4f48dd66bb65c6205df593210ebe11a5191c01b184a73e3f75772c",
