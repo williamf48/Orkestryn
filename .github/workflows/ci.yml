@@ -47,7 +47,7 @@ jobs:
         run: python -B -S -m unittest discover -s scripts -p test_runner_tests.py -v
       - name: Diagnose Windows core regressions
         if: runner.os == 'Windows'
-        run: python -B -S scripts/test.py --jobs 1 --modules desktop_tests operations_factory_tests safety_tests --output "${{ runner.temp }}/core-tests"
+        run: python -B -S scripts/test.py --jobs 1 --modules connected_team_tests desktop_tests operations_factory_tests safety_tests --output "${{ runner.temp }}/core-tests"
       - name: Run complete offline Python suite
         run: python -B -S scripts/test.py --output "${{ runner.temp }}/offline-tests"
       - name: Run dashboard behavior checks
