@@ -40,6 +40,9 @@ jobs:
         run: python -B -S scripts/check_repository.py --staged
       - name: Check setup
         run: python -B -S app/project.py doctor
+      - name: Use a canonical temporary directory
+        # Hosted Windows TEMP can use RUNNER~1, which strict path guards reject.
+        run: python -B -S -c "import os; from pathlib import Path; root = str(Path(os.environ['RUNNER_TEMP']).resolve()); Path(os.environ['GITHUB_ENV']).open('a', encoding='utf-8').write('TMPDIR=' + root + '\nTEMP=' + root + '\nTMP=' + root + '\n')"
       - name: Check test-runner failure reporting
         run: python -B -S -m unittest discover -s scripts -p test_runner_tests.py -v
       - name: Diagnose Windows core regressions
