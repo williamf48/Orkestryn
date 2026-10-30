@@ -2,6 +2,7 @@
 from pathlib import Path
 import argparse
 import concurrent.futures
+import faulthandler
 import importlib
 import json
 import os
@@ -16,6 +17,27 @@ ROOT = Path(__file__).resolve().parents[1]
 APP = ROOT / 'app'
 sys.path.insert(0, str(APP))
 import project
+
+
+class DiagnosticResult(unittest.TextTestResult):
+    """Keep earlier failures visible even if a later test hangs."""
+    def report_now(self, test, error):
+        self.stream.writeln('\nImmediate diagnostic: ' + test.id())
+        self.stream.writeln(''.join(traceback.format_exception(*error)))
+        self.stream.flush()
+
+    def addError(self, test, error):
+        super().addError(test, error)
+        self.report_now(test, error)
+
+    def addFailure(self, test, error):
+        super().addFailure(test, error)
+        self.report_now(test, error)
+
+    def addSubTest(self, test, subtest, error):
+        super().addSubTest(test, subtest, error)
+        if error is not None:
+            self.report_now(subtest, error)
 
 
 def write_result(output, name, value):
@@ -33,7 +55,11 @@ def run_module(name, output):
         module = importlib.import_module(name)
         suite = unittest.defaultTestLoader.loadTestsFromTestCase(getattr(module, project.MODULES[name]))
         expected = suite.countTestCases()
-        result = unittest.TextTestRunner(verbosity=2, buffer=True).run(suite)
+        faulthandler.dump_traceback_later(270)
+        try:
+            result = unittest.TextTestRunner(verbosity=2, buffer=True, resultclass=DiagnosticResult).run(suite)
+        finally:
+            faulthandler.cancel_dump_traceback_later()
         unchanged = before == project.source_hashes()
         passed = result.wasSuccessful() and result.testsRun == expected and not result.skipped and unchanged
         value = {'module': name, 'passed': bool(passed), 'status': 'PASSED' if passed else 'FAILED',

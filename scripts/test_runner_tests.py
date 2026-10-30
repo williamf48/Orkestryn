@@ -1,5 +1,6 @@
 """Regression checks for crashes, timeouts, and contradictory worker reports."""
 import importlib.util
+import io
 import json
 from pathlib import Path
 import tempfile
@@ -51,6 +52,21 @@ class RunnerTests(unittest.TestCase):
         self.assertFalse(result['passed'])
         self.assertEqual(result['status'], 'MODULE_ERROR')
         self.assertIn('fixture missing dependency', result['detail'])
+
+    def test_subtest_error_is_visible_before_the_next_test_runs(self):
+        log = io.StringIO()
+        class Example(unittest.TestCase):
+            def test_a_error(self):
+                with self.subTest(family='dependency'):
+                    raise RuntimeError('fixture child failed')
+            def test_b_inspect(self):
+                self.assertIn('Immediate diagnostic:', log.getvalue())
+                self.assertIn('RuntimeError: fixture child failed', log.getvalue())
+        result = unittest.TextTestRunner(stream=log, buffer=True, resultclass=runner.DiagnosticResult).run(
+            unittest.defaultTestLoader.loadTestsFromTestCase(Example))
+        self.assertEqual(result.testsRun, 2)
+        self.assertEqual(len(result.errors), 1)
+        self.assertEqual(result.failures, [])
 
 
 if __name__ == '__main__':
