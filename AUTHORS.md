@@ -1,6 +1,6 @@
 # Author
 
-**William Fernandes** — project creator and developer.
+William Fernandes — project creator and developer.
 
 GitHub: [williamf48](https://github.com/williamf48)
 

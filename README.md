@@ -1,10 +1,10 @@
 # Orkestryn
 
-**Agents in sync. Humans in control.**
+Agents in sync. Humans in control.
 
 Orkestryn (formerly Agent Rehearsal) coordinates AI-proposed infrastructure changes and scoped recovery while preserving customer-owned work. NVIDIA Nemotron runs through Nebius Token Factory; an independent controller validates proposals, and people approve exact operations before effects occur.
 
-Python **3.10+** · Windows / macOS / Linux · **MIT**
+Python 3.10+ · Windows / macOS / Linux · MIT
 
 ## What you can do
 
@@ -16,7 +16,9 @@ Python **3.10+** · Windows / macOS / Linux · **MIT**
 - Compare Safety Lab controls and live model monitors against independent simulated outcomes.
 - Export evidence with provider-reported usage and deterministic replay checks.
 
-## Run the main app
+## Run locally
+
+Main app:
 
 No package installation is needed for the core app or free scripted demo.
 
@@ -24,15 +26,15 @@ No package installation is needed for the core app or free scripted demo.
 python run.py --main --console
 ```
 
-On Windows use `py -3` instead of `python`, or double-click **START_APP.cmd**. The launcher prints the local address. Windows main mode reuses existing accounts in `~/AgentRehearsal/operations_runs`; new installations follow the account setup shown in the browser. Keep the console running.
+On Windows use `py -3` instead of `python`, or double-click START_APP.cmd. The launcher prints the local address. Windows main mode reuses existing accounts in `~/AgentRehearsal/operations_runs`; new installations follow the account setup shown in the browser. Keep the console running.
 
-## Run the judge demo
+Judge demo:
 
 ```sh
 python run.py --demo --console
 ```
 
-On Windows, double-click **START_DEMO.cmd**. A private welcome page supplies generated **judge-admin** credentials for an isolated workspace. The demo includes the complete dashboard, approvals, monitoring, evidence and Safety Lab. The free walkthrough uses labelled scripted proposals with real local process/HTTP effects.
+On Windows, double-click START_DEMO.cmd. A private welcome page supplies generated judge-admin credentials for an isolated workspace. The demo includes the complete dashboard, approvals, monitoring, evidence and Safety Lab. The free walkthrough uses labelled scripted proposals with real local process/HTTP effects.
 
 Live NVIDIA requests are optional and reviewed one at a time. Enter a Nebius key privately in the app, or configure owner-funded access. Keys are excluded from saved evidence. No shared provider key or password is bundled. Startup makes zero model calls. See [judge instructions](docs/judge-guide.md) and [NVIDIA setup](docs/nvidia.md).
 
@@ -42,7 +44,7 @@ The app calls `nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B` through `https://api.token
 
 Nebius hosts inference, so the local computer needs no NVIDIA GPU. The application server, SQLite, worker processes and probes run locally unless you deploy the supplied hosting configuration. SDK-based command-line integrations are optional: `python -m pip install -r requirements.txt`.
 
-## Workflow
+Typical workflow:
 
 1. Create a workflow and review the Planning and Governance stages.
 2. Inspect and approve the exact batch; start the background observer.
@@ -69,7 +71,7 @@ python run.py --demo --check --directory /tmp/orkestryn-smoke
 python scripts/build_release.py --output dist
 ```
 
-UI checks need Node.js. On Windows, use a new path under `$env:TEMP` for test outputs instead of `/tmp`. The build creates a source ZIP and **Orkestryn.pyz** for GitHub Release assets; generated binaries and archives are not committed to source. See [testing](docs/testing.md) and [upload instructions](docs/github-upload.md).
+UI checks need Node.js. On Windows, use a new path under `$env:TEMP` for test outputs instead of `/tmp`. The build creates a source ZIP and Orkestryn.pyz for GitHub Release assets; generated binaries and archives are not committed to source. See [testing](docs/testing.md) and [upload instructions](docs/github-upload.md).
 
 ## Repository layout
 
@@ -84,7 +86,7 @@ UI checks need Node.js. On Windows, use a new path under `$env:TEMP` for test ou
 
 Tests remain beside the modules they exercise to preserve existing fixture paths and direct command-line tools. Old verification dumps, terminal logs, duplicate reports, development diaries, caches, account files and generated run folders are excluded.
 
-## Evidence boundaries
+Evidence limits:
 
 Capacity units and customer resources are local fixtures, not provider GPU reservations. HTTP probes are local measurements, not a cloud SLA. Built-in attacks are authored; the same Nemotron model in different roles does not establish independent trusted oversight. The project makes no production-safety, alignment-certification, revenue or incident-prevention claim.
 
