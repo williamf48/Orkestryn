@@ -8,6 +8,10 @@ on:
 permissions:
   contents: read
 
+concurrency:
+  group: offline-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   verify:
     name: ${{ matrix.os }} / Python ${{ matrix.python }}
@@ -45,9 +49,6 @@ jobs:
         run: python -B -S -c "import os; from pathlib import Path; root = str(Path(os.environ['RUNNER_TEMP']).resolve()); Path(os.environ['GITHUB_ENV']).open('a', encoding='utf-8').write('TMPDIR=' + root + '\nTEMP=' + root + '\nTMP=' + root + '\n')"
       - name: Check test-runner failure reporting
         run: python -B -S -m unittest discover -s scripts -p test_runner_tests.py -v
-      - name: Diagnose Windows core regressions
-        if: runner.os == 'Windows'
-        run: python -B -S scripts/test.py --jobs 1 --modules connected_team_tests desktop_tests operations_factory_tests safety_tests --output "${{ runner.temp }}/core-tests"
       - name: Run complete offline Python suite
         run: python -B -S scripts/test.py --output "${{ runner.temp }}/offline-tests"
       - name: Run dashboard behavior checks
@@ -68,7 +69,6 @@ jobs:
         with:
           name: diagnostics-${{ matrix.os }}-python-${{ matrix.python }}
           path: |
-            ${{ runner.temp }}/core-tests
             ${{ runner.temp }}/offline-tests
             ${{ runner.temp }}/safety-ui-checks.json
           retention-days: 7
