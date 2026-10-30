@@ -40,12 +40,30 @@ jobs:
         run: python -B -S scripts/check_repository.py --staged
       - name: Check setup
         run: python -B -S app/project.py doctor
+      - name: Check test-runner failure reporting
+        run: python -B -S -m unittest discover -s scripts -p test_runner_tests.py -v
+      - name: Diagnose Windows core regressions
+        if: runner.os == 'Windows'
+        run: python -B -S scripts/test.py --jobs 1 --modules desktop_tests operations_factory_tests safety_tests --output "${{ runner.temp }}/core-tests"
       - name: Run complete offline Python suite
-        run: python -B -S scripts/test.py
+        run: python -B -S scripts/test.py --output "${{ runner.temp }}/offline-tests"
       - name: Run dashboard behavior checks
+        if: ${{ !cancelled() }}
         run: python -B -S app/operations_ui_checks.py
       - name: Run Safety Lab interface checks
+        if: ${{ !cancelled() }}
         run: python -B -S app/safety_ui_checks.py --output "${{ runner.temp }}/safety-ui-checks.json"
+      - name: Retain test diagnostics
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
+        with:
+          name: diagnostics-${{ matrix.os }}-python-${{ matrix.python }}
+          path: |
+            ${{ runner.temp }}/core-tests
+            ${{ runner.temp }}/offline-tests
+            ${{ runner.temp }}/safety-ui-checks.json
+          retention-days: 7
+          if-no-files-found: warn
   inspect-research:
     name: Optional Inspect adapter / Python 3.12
     runs-on: ubuntu-latest
