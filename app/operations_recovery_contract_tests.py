@@ -1,5 +1,5 @@
 """Recovery boundary regressions: policy copies and fake transports, zero inference."""
-import copy,json,tempfile,unittest
+import copy,json,tempfile,time,unittest
 from pathlib import Path
 import named_access
 import operations_workspace as ops
@@ -23,6 +23,15 @@ class RecoveryReplay(ops.ScriptedRole):
 
 class RecoveryContractTests(unittest.TestCase):
     def setUp(self):self.data=json.loads(DATA.read_text())
+    def observe_settled(self,run):
+        # A confirmed native exit can change from a signalled handle to a
+        # missing process. Discard that window exactly as the observer does.
+        deadline=time.monotonic()+5
+        while True:
+            try:return run.observe()
+            except ValueError as exc:
+                if str(exc)!='Service changed during the observation; discard this window.' or time.monotonic()>=deadline:raise
+                time.sleep(.05)
     def test_original_deferral_is_still_valid_and_stays_unchanged(self):
         value=copy.deepcopy(self.data['recovery_reply']);raw=sim.canonical(value)
         self.assertEqual(ops.m.parse_recovery(raw,value['based_on_incident'])['decision'],'defer')
@@ -64,7 +73,7 @@ class RecoveryContractTests(unittest.TestCase):
                     for role,provider in [('factory',factory),('governance',governance)]:
                         preview=run.proposal_review(role);run.request_proposal(role,preview['digest'],principal,provider)
                     _,phrase=run.batch_proposal();run.approve_batch(phrase,principal)
-                    run.simulate_failure('candidate');run.observe();run.observe()
+                    run.simulate_failure('candidate');self.observe_settled(run);self.observe_settled(run)
                     before=run.state();self.assertEqual(before['phase'],'INCIDENT_RECORDED')
                     review=run.proposal_review('recovery');ctx=review['context']
                     self.assertEqual(ctx['current_state']['budget_version'],2)
@@ -95,7 +104,7 @@ class RecoveryContractTests(unittest.TestCase):
             try:
                 with ops.opened(path) as run:
                     run.advance();_,phrase=run.batch_proposal();run.approve_batch(phrase,ops.fixture('manager'))
-                    run.simulate_failure('candidate');run.observe();run.observe();value=run.advance()
+                    run.simulate_failure('candidate');self.observe_settled(run);self.observe_settled(run);value=run.advance()
                     self.assertIn('RECOMMENDATION_ONLY',value['calls'][-1]['context']['decision_stage'])
                     self.assertEqual(value['phase'],'AWAITING_RECOVERY_APPROVAL');self.assertIsNone(value['recovery'])
                     self.assertEqual(value['model_calls'],0)
