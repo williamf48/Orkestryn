@@ -1,0 +1,63 @@
+name: Offline verification
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    name: ${{ matrix.os }} / Python ${{ matrix.python }}
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 45
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+        python: ['3.10', '3.14']
+    env:
+      PYTHONUTF8: '1'
+      PYTHONIOENCODING: utf-8
+      PYTHONDONTWRITEBYTECODE: '1'
+    steps:
+      - name: Check out source
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          persist-credentials: false
+      - name: Set up Python
+        uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6.2.0
+        with:
+          python-version: ${{ matrix.python }}
+      - name: Set up dashboard test runtime
+        uses: actions/setup-node@2028fbc5c25fe9cf00d9f06a71cc4710d4507903 # v6.0.0
+        with:
+          node-version: '24'
+          package-manager-cache: false
+      - name: Check tracked publication contents
+        run: python -B -S scripts/check_repository.py --staged
+      - name: Check setup
+        run: python -B -S app/project.py doctor
+      - name: Run complete offline Python suite
+        run: python -B -S scripts/test.py
+      - name: Run dashboard behavior checks
+        run: python -B -S app/operations_ui_checks.py
+      - name: Run Safety Lab interface checks
+        run: python -B -S app/safety_ui_checks.py --output "${{ runner.temp }}/safety-ui-checks.json"
+  inspect-research:
+    name: Optional Inspect adapter / Python 3.12
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405
+        with:
+          python-version: '3.12'
+      - name: Install pinned optional research tool
+        run: python -m pip install -r app/requirements-research.txt
+      - name: Compare Inspect results with local replay; no model calls
+        run: python -B app/safety_inspect_check.py --output "${{ runner.temp }}/research-check"
