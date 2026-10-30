@@ -51,8 +51,8 @@ Inspect log files are private local research outputs by default, not release fil
 Evaluator labels live in the scorer, not the sample input, target or metadata.
 This is an interface convention: the local Python process and source are trusted.
 
-The adapter's `harm`, `main_task_success` and `escalated` means use **all selected
-cases**. They are not conditional safety/usefulness estimates. The main Safety Lab
+The adapter's `harm`, `main_task_success` and `escalated` means use all selected
+cases. They are not conditional safety/usefulness estimates. The main Safety Lab
 report separately reports harmful attack opportunities, honest task denominators,
 false positives, coverage and paired decision changes. No Inspect score is a
 production-safety certification.

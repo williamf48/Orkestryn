@@ -56,7 +56,7 @@ There is no public registration or remotely usable first-account bootstrap.
 ## Judge-facing NVIDIA selection
 
 With `AR_LIVE_PROPOSALS=1` and the owner key configured as a host secret, the
-creation menu selects **NVIDIA Nemotron through Nebius**. Judges enter only their
+creation menu selects NVIDIA Nemotron through Nebius. Judges enter only their
 workspace account credentials. The menu never collects, stores or sends an API
 key. It shows an owner-setup explanation when live access is unavailable. See
 [OWNER_LIVE_SETUP.md](owner-live-setup.md). Keep the existing hosted flag explicit;
@@ -64,8 +64,8 @@ the desktop launcher's automatic environment detection does not override it.
 
 ## Optional Render deployment
 
-The included `render.yaml` uses a **paid Starter web service and a 1 GB persistent
-disk**. Review Render's displayed price before creating it. Preparing this file
+The included `render.yaml` uses a paid Starter web service and a 1 GB persistent
+disk. Review Render's displayed price before creating it. Preparing this file
 does not purchase or deploy a service. Its native Python entry point avoids
 requiring Docker on your Windows laptop.
 
@@ -126,6 +126,6 @@ Login sessions last thirty minutes. New workflows default to sixty minutes;
 judges can choose fifteen, thirty or sixty minutes before creation. Signing back
 in preserves an unexpired workflow and never renews its duration. These limits
 are not deadlines on the judge accounts. Keep the host, accounts, disk and
-inference access available until **24 December 2026, 1:30 AM IST** (15 December
+inference access available until 24 December 2026, 1:30 AM IST (15 December
 2026, noon Pacific). Freeze the submitted version before the submission deadline;
 do not silently replace the judged implementation after the deadline.

@@ -2,12 +2,12 @@
 
 # Live judge access without distributing the Nebius key
 
-This release adds an **owner-hosted inference relay** for the downloadable app.
+This release adds an owner-hosted inference relay for the downloadable app.
 The Windows application, local workers, approvals and saved runs stay on the
 judge's computer. Only the three separately approved proposal requests go to
 the relay, which calls NVIDIA Nemotron through Nebius Token Factory.
 
-**Status: prepared code, not a deployed service.** A host account, private host
+Status: prepared code, not a deployed service. A host account, private host
 secrets and an actual live acceptance walkthrough are still required. Offline
 tests use mock provider responses and do not prove Nebius connectivity, credits,
 free-tier capacity or availability through judging.
@@ -19,16 +19,16 @@ your Token Factory balance separately. Choose the Free plan; no paid plan is
 required by this implementation. Check your account's limits before deployment.
 
 1. Sign in to your own Cloudflare account at <https://dash.cloudflare.com/>.
-   Under **Workers & Pages**, create a Worker named `orkestryn-relay`.
+   Under Workers & Pages, create a Worker named `orkestryn-relay`.
    Use its assigned `https://...workers.dev` address. No custom domain or PC
    tunnel is needed. Leave this service disabled until the steps below are done.
 2. Open the Worker editor. Replace its example module with the complete contents
    of `judge_relay_worker.mjs`. This file contains the fixed registered prompts;
    it needs no npm dependencies or imports. Save/deploy the module.
-3. Under **Storage & databases → D1**, create a dedicated database named
+3. Under Storage & databases → D1, create a dedicated database named
    `orkestryn-relay`. In its SQL console, execute the complete contents of
-   `judge_relay_schema.sql` once. In your Worker **Bindings**, add that D1 database
-   with the binding name **`DB`**. Keep this ledger for the judging period.
+   `judge_relay_schema.sql` once. In your Worker Bindings, add that D1 database
+   with the binding name `DB`. Keep this ledger for the judging period.
 4. On your Windows computer, open a terminal in the extracted project. Generate
    a new private owner setup, substituting your actual assigned URL:
 
@@ -40,8 +40,8 @@ required by this implementation. Check your account's limits before deployment.
    evaluation password. This file and `relay_connection_private.json` are
    private; neither belongs in the repository or public release ZIP. Re-running
    setup never replaces them. Use the originals if they already exist.
-5. In Worker **Settings → Variables and Secrets**, add three values of type
-   **Secret**:
+5. In Worker Settings → Variables and Secrets, add three values of type
+   Secret:
 
    | Name | Private value |
    |---|---|
@@ -79,17 +79,17 @@ Cloudflare dashboard labels can change. Primary documentation:
 
 The owner supplies three items privately in Devpost testing instructions:
 the actual relay URL, the evaluation username, and the evaluation password.
-These are scoped relay credentials, **not a Nebius API key**. The username is
+These are scoped relay credentials, not a Nebius API key. The username is
 `judge` unless the deployment owner intentionally changes it.
 
-1. Install Python 3.10 or newer if necessary. Download and **Extract All** files.
-2. Double-click **`START_JUDGE_LIVE.cmd`**. On first use, enter the provided relay
+1. Install Python 3.10 or newer if necessary. Download and Extract All files.
+2. Double-click `START_JUDGE_LIVE.cmd`. On first use, enter the provided relay
    URL and evaluation password in its hidden terminal prompt. No SDK or pip
    installation is needed. Settings are saved privately for later launches.
-3. The welcome page opens with three generated **local application** logins.
+3. The welcome page opens with three generated local application logins.
    These are separate from the shared relay access password. Sign in as
-   `judge-admin` (or the separate manager account) and create **NVIDIA Nemotron through Nebius → Balanced →
-   60 minutes**. Creating a workflow sends no model request.
+   `judge-admin` (or the separate manager account) and create NVIDIA Nemotron through Nebius → Balanced →
+   60 minutes. Creating a workflow sends no model request.
 4. Follow the welcome page: separately review Planning and Governance, approve
    the exact batch, start observation, approve the development fault, review
    Recovery, approve recovery effects, and complete the two handoff roles and
@@ -147,4 +147,4 @@ approve a scripted-only replacement for live NVIDIA functionality.
 
 The latest app also supports direct per-workflow key entry. If an evaluation key is supplied privately, judges can choose NVIDIA in Create a workflow and paste it into the masked field. That direct route needs neither a Cloudflare deployment nor a provider SDK. The relay instructions above describe the optional route that keeps the provider key solely on the owner host. See [NVIDIA_KEY_ENTRY.md](nvidia.md).
 
-The live relay launcher also generates **judge-admin** for one-login evaluation. Both handoff reviews remain separate; outcome evidence identifies a single account when it approves both. See JUDGE_DASHBOARD.md.
+The live relay launcher also generates judge-admin for one-login evaluation. Both handoff reviews remain separate; outcome evidence identifies a single account when it approves both. See JUDGE_DASHBOARD.md.

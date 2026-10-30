@@ -3,8 +3,8 @@
 # Portable run evidence
 
 Sign in to the Operations console, select a saved workflow, then choose
-**Download evidence ZIP** beside **View outcome report**. Extract the whole ZIP
-and open **index.html** on any laptop. Viewing the export needs no Python,
+Download evidence ZIP beside View outcome report. Extract the whole ZIP
+and open index.html on any laptop. Viewing the export needs no Python,
 application source, account or internet connection.
 
 This is a read-only replay of a saved run. It does not run agents or services,
@@ -36,7 +36,7 @@ rebound or revalidated as current-source effects. No account permission, origina
 workflow lease, model retry or approval rule is changed by downloading evidence.
 
 If an observer or another action changes the saved summary during export, the
-download stops with **EVIDENCE_CHANGED**. Refresh and explicitly download again.
+download stops with EVIDENCE_CHANGED. Refresh and explicitly download again.
 There is no automatic export retry, model call or workflow reconciliation.
 
 ## Create or verify from a terminal
@@ -58,7 +58,7 @@ files, path traversal, duplicate members, file links, oversized content, changed
 hashes and reports referring to different snapshots. It neither extracts files
 nor opens HTML, starts a process or contacts a provider.
 
-**INTEGRITY_CHECKED** means the included files agree with the package's manifest
+INTEGRITY_CHECKED means the included files agree with the package's manifest
 and cross-file references. It does not authenticate the author, prove a provider
 response, establish current liveness or verify the complete original private
 journal. Someone who rewrites every file and hash can create a different bundle;
